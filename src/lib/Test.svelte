@@ -1,12 +1,3 @@
-<script context="module" lang="ts">
-	export type InfoItem = {
-		name: string;
-		url: string;
-		color: string;
-		description: string;
-	};
-</script>
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import usePollRate, { type PollRateOptions } from '../hooks/usePollRate';
@@ -29,9 +20,14 @@
 
 	let carouselIdx = 0;
 
+	let carouselHeight: number;
 	let carouselWidth: number;
-	$: itemWidth = Math.max(carouselWidth / visibleItems, minItemWidth);
-
+	$: itemHeight = carouselHeight * 0.95;
+	// $: itemWidth = Math.m	ax(carouselWidth / visibleItems, minItemWidth);
+	// $: itemWidth = (1 / items.length) * 100
+	$: itemWidth = itemHeight * 16 / 9;
+	
+	// $: _itemWidth = (carouselWidth * (itemWidth / 100));
 	$: relPosMap = Array.from({ length: items.length }, (_, i) =>
 		Array.from({ length: items.length }, (_, j) => {
 			const relPos = mod(i - j, items.length);
@@ -267,18 +263,19 @@
 />
 
 <section>
-	<div class="carousel-container" bind:offsetWidth={carouselWidth}>
+	<div class="carousel-container" bind:offsetHeight={carouselHeight} bind:offsetWidth={carouselWidth}>
 		{#each items as item, i (i)}
 			<!-- style:box-shadow={`${!blockTransitions && relPosMap[i][carouselIdx] === 0 ? `0 0 10px ${item.color}` : 'none'}`} -->
 			<div
 				data-idx={i}
 				data-color={item.color}
 				class="carousel-item"
+				style:height={`${itemHeight}px`}
 				style:width={`${itemWidth}px`}
 				style:border={`${!blockTransitions && relPosMap[i][carouselIdx] === 0 ? `2px solid ${item.color}` : '1px solid black'}`}
 				style:left={`${leftMap[i][carouselIdx]}px`}
 				style:transform={`scale(${
-					(items.length - Math.abs(relPosMap[i][carouselIdx])) / 10
+					(items.length - Math.abs(relPosMap[i][carouselIdx])) / items.length
 				})`}
 				style:transition={`border ${transTime}ms ease-out, box-shadow ${transTime}ms ease-out, ${
 					!blockTransitions &&
@@ -291,7 +288,7 @@
 				<!-- {item.name.toUpperCase()} -->
 				<!-- svelte-ignore a11y-missing-attribute -->
 				<iframe
-					src="https://{items[(carouselIdx + i) % items.length].url}"
+					src="https://{items[i]?.url}"
 					allowfullscreen
 					height="100%"
 					width="100%"
@@ -395,7 +392,7 @@
 	section {
 		width: 100%;
 		height: 100%;
-		padding-top: 2rem;
+		padding-top: 1.25rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -442,22 +439,22 @@
 
 	.carousel-container {
 		width: 100%;
-		height: 40%;
+		height: 50%;
 		display: flex;
 		flex-direction: row;
 		position: relative;
 	}
 
 	.carousel-item {
-		width: fit-content;
-		height: 100%;
+		/* width: fit-content; */
+		height: 95%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		position: absolute;
 		bottom: 0;
 		background: #161616;
-		transition: left 0.5s ease-in-out;
+		/* transition: left 0.5s ease-in-out; */
 		border-radius: 10px;
 		overflow: hidden;
 	}
@@ -530,7 +527,7 @@
 		align-items: center;
 		position: absolute;
 		overflow-y: auto;
-
+		width: 100%;
 		padding: 1rem;
 	}
 </style>
