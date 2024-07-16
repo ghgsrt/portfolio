@@ -57,12 +57,14 @@ body {
 	margin: 2rem auto;
 	/* padding: 2rem 0; */
 	text-align: center;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden;
+	/* overflow-y: auto; */
 	background-color: var(--color-background);
 	overflow: hidden;
 	border: 1px solid black;
 	border-radius: 40px;
+	z-index: 2000;
+
 	/* border-right: 1px solid black; */
 }
 

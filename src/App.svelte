@@ -8,8 +8,8 @@
 
 <svelte:window bind:innerWidth />
 
-<Scrollbar parent={main} arcTop={40} arcBottom={innerWidth < 660 ? 0 : 40} />
 <main bind:this={main}>
+	<Scrollbar parent={main} arcTop={40} arcBottom={innerWidth < 660 ? 0 : 40} />
 	<section>
 		<button
 			class="github"
