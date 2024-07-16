@@ -87,7 +87,7 @@
 		font-size: 2rem;
 		padding: 0.75rem;
 		text-align: center;
-		border-radius: 50%;
+		border-radius: 50% !important;
 		opacity: 0.3;
 		outline: 1px solid #242424;
 		-webkit-text-stroke: 1px #303030;

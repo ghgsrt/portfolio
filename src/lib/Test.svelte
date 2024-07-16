@@ -313,7 +313,16 @@
 				? `max-height ${transTime * 0.85}ms ease-in-out`
 				: 'none'}
 		>
-			<Scrollbar parent={info[carouselIdx]} arcTop={20} />
+			<div
+				style:overflow={'hidden'}
+				style:height={'100%'}
+				style:z-index={2000}
+				style:border-radius={'20px 20px 0 0'}
+				style:margin-top={'1px'}
+				style:margin-right={'3px'}
+			>
+				<Scrollbar parent={info[carouselIdx]} arcTop={20} />
+			</div>
 
 			{#each items as item, i (i)}
 				<div
@@ -384,7 +393,7 @@
 		font-size: 2.5rem;
 		padding: 0.75rem;
 		text-align: center;
-		border-radius: 50%;
+		border-radius: 50% !important;
 		opacity: 0.3;
 		outline: 1px solid #242424;
 		-webkit-text-stroke: 1px #303030;
