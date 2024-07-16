@@ -35,6 +35,8 @@
 			dashOffset += scrollPos - parent.scrollTop;
 			scrollPos = parent.scrollTop;
 		});
+
+	onMount(update);
 </script>
 
 <svelte:window on:resize={update} />
