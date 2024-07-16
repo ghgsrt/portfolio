@@ -8,7 +8,10 @@
 		type MySVGPathElement,
 	} from './svg/Path.svelte';
 	import { items } from './data/siteInfo';
+	import Scrollbar from './Scrollbar.svelte';
 
+	let infoWindow: HTMLElement;
+	let info: HTMLElement[] = [];
 	let infoHeights: number[] = []; // "let" to be reactive
 	let infoContainerWidth: number;
 	let infoContainerHeight: number;
@@ -16,24 +19,27 @@
 
 	const visibleItems = 1.5;
 	const itemSpacing = 30; // px
-	const minItemWidth = 490; // px
 
 	let carouselIdx = 0;
 
 	let carouselHeight: number;
 	let carouselWidth: number;
+	let itemWidth: number;
 	$: itemHeight = carouselHeight * 0.95;
-	// $: itemWidth = Math.m	ax(carouselWidth / visibleItems, minItemWidth);
-	// $: itemWidth = (1 / items.length) * 100
-	$: itemWidth = itemHeight * 16 / 9;
-	
-	// $: _itemWidth = (carouselWidth * (itemWidth / 100));
+
+	const setItemWidth = () => {
+		let _itemWidth = (itemHeight * 16) / 9;
+		itemWidth =
+			window.innerWidth < _itemWidth ? window.innerWidth * 0.95 : _itemWidth;
+	};
+
 	$: relPosMap = Array.from({ length: items.length }, (_, i) =>
 		Array.from({ length: items.length }, (_, j) => {
 			const relPos = mod(i - j, items.length);
 			return relPos <= items.length / 2 ? relPos : relPos - items.length;
 		})
 	);
+	$: console.log(relPosMap);
 	$: leftMap = Array.from({ length: items.length }, (_, i) =>
 		Array.from({ length: items.length }, (_, j) => {
 			const relPos = relPosMap[i][j];
@@ -82,8 +88,8 @@
 		const arc = 20;
 
 		const _arc = `A${arc},${arc} 0 0 1`;
-		const _start = ``;
-		// const _start = `L${midWidth},0`;
+		// const _start = ``;
+		const _start = `L${midWidth},0`;
 		const _endpoint = `L${midWidth},${startHeight}`;
 		// const _endpoint = ``;
 
@@ -147,10 +153,10 @@
 		_dRight = `${_endpoint} ${_dRight}`;
 		_dLeft = `${_endpoint} ${_dLeft}`;
 		return {
-			// dRight: `${Mify(_start)} ${_dRight}`,
-			// dLeft: `${Mify(_start)} ${_dLeft}`,
-			dRight: `${Mify(_dRight)}`,
-			dLeft: `${Mify(_dLeft)}`,
+			dRight: `${Mify(_start)} ${_dRight}`,
+			dLeft: `${Mify(_start)} ${_dLeft}`,
+			// dRight: `${Mify(_dRight)}`,
+			// dLeft: `${Mify(_dLeft)}`,
 			dRightClear: `M${_dRightClear} ${_endpoint} ${_start}`, //`${Mify(_dRight)} ${_start}`,
 			dLeftClear: `M${_dLeftClear} ${_endpoint} ${_start}`, //`${Mify(_dLeft)} ${_start}`,
 		};
@@ -172,7 +178,6 @@
 			if (prevPath[0]) {
 				const waiting0 = waitingToPlay.get(prevPath[0]);
 				if (waiting0) {
-					console.log('deez');
 					clearTimeout(waiting0);
 					prevPath[0]?.__play();
 					prevPath[1]?.__play();
@@ -183,7 +188,6 @@
 						prev1?.__clear();
 					}, 100);
 				} else {
-					console.log('nuts');
 					prevPath[0]?.__clear();
 					prevPath[1]?.__clear();
 				}
@@ -192,14 +196,13 @@
 			const path0 = pathGenerators[0][carouselIdx]?.();
 			const path1 = pathGenerators[1][carouselIdx]?.();
 			if (path0) {
-				console.log('huh');
 				waitingToPlay.set(
 					path0,
 					setTimeout(() => {
 						path0.__play();
 						path1.__play();
 						waitingToPlay.delete(path0);
-					}, 200)
+					}, transTime)
 				);
 				prevPath[0] = path0;
 				prevPath[1] = path1;
@@ -240,30 +243,44 @@
 		setTimeout(shiftIdx(0));
 	};
 
-	onMount(resetCarousel);
+	onMount(() => {
+		resetCarousel();
+		setItemWidth();
+	});
 
 	let blockTransitions = false;
+
+	let onscroll: any;
 </script>
 
 <svelte:window
 	on:resize={() => {
 		blockTransitions = true;
 		setTimeout(() => {
+			setItemWidth();
 			resetCarousel();
 			setTimeout(() => (blockTransitions = false), 7);
 		}, 7);
 	}}
-	on:click={increment}
-	on:contextmenu={(e) => {
-		e.preventDefault();
-		e.stopPropagation();
-
-		decrement();
-	}}
 />
+	<!-- on:click={increment}
+	on:contextmenu={(e) => {
+		// e.preventDefault();
+		// e.stopPropagation();
+
+		// decrement();
+	}} -->
 
 <section>
-	<div class="carousel-container" bind:offsetHeight={carouselHeight} bind:offsetWidth={carouselWidth}>
+	<div
+		class="carousel-container"
+		bind:offsetHeight={carouselHeight}
+		bind:offsetWidth={carouselWidth}
+	>
+		<div class="button-wrapper">
+			<button class="button left" on:click={decrement}></button>
+			<button class="button right" on:click={increment}></button>
+		</div>
 		{#each items as item, i (i)}
 			<!-- style:box-shadow={`${!blockTransitions && relPosMap[i][carouselIdx] === 0 ? `0 0 10px ${item.color}` : 'none'}`} -->
 			<div
@@ -281,7 +298,7 @@
 					!blockTransitions &&
 					Math.abs(relPosMap[i][carouselIdx]) < visibleItems + 2
 						? `left ${transTime}ms ease-out, transform ${transTime}ms ease-out`
-						: `none`
+						: `left 0ms linear`
 				}`}
 				style:z-index={items.length - Math.abs(relPosMap[i][carouselIdx])}
 			>
@@ -333,16 +350,19 @@
 		{/each}
 		<!-- style:max-height={`${infoHeights[carouselIdx] ?? 0}px`} -->
 		<div
+			bind:this={infoWindow}
 			class="info-window"
 			style:margin-top={`${infoTopOffset}px`}
 			style:transition={!blockTransitions
 				? `max-height ${transTime * 0.85}ms ease-in-out`
 				: 'none'}
 		>
-			<div class="info-gutter-outer">
-				<div class="info-gutter-inner">
-					{#each items as item, i (i)}
-						<!-- <div
+			<Scrollbar parent={info[carouselIdx]} arcTop={20} />
+
+			<!-- <div class="info-gutter-outer">
+				<div class="info-gutter-inner"> -->
+			{#each items as item, i (i)}
+				<!-- <div
 							class="info"
 							bind:offsetHeight={infoHeights[i]}
 							style:top={`${topMap[i][carouselIdx]}px`}
@@ -357,28 +377,28 @@
 						>
 							<Info {item} />
 						</div> -->
-						<div
-							class="info"
-							bind:offsetHeight={infoHeights[i]}
-							style:top={`${topMap[i][carouselIdx]}px`}
-							style:max-height={`calc(${infoContainerHeight - infoTopOffset}px`}
-							style:transition={`${
-								!blockTransitions &&
-								Math.abs(relPosMap[i][carouselIdx]) < visibleItems + 2
-									? `top ${transTime}ms ease-out`
-									: `none`
-							}`}
-							style:z-index={items.length - Math.abs(relPosMap[i][carouselIdx])}
-						>
-							<Info {item} />
-						</div>
-					{/each}
+				<div
+					class="info"
+					bind:this={info[i]}
+					bind:offsetHeight={infoHeights[i]}
+					style:top={`${topMap[i][carouselIdx]}px`}
+					style:max-height={`calc(${infoContainerHeight - infoTopOffset}px`}
+					style:transition={`${
+						!blockTransitions &&
+						Math.abs(relPosMap[i][carouselIdx]) < visibleItems + 2
+							? `top ${transTime}ms ease-out`
+							: `none`
+					}`}
+					style:z-index={items.length - Math.abs(relPosMap[i][carouselIdx])}
+					on:scroll={() => console.log('scrolling')}
+				>
+					<Info {item} />
 				</div>
-			</div>
+			{/each}
+			<!-- </div>
+			</div> -->
 		</div>
 	</div>
-	<!-- <div class="shadow left"></div>
-	<div class="shadow right"></div> -->
 </section>
 
 <style>
@@ -387,6 +407,10 @@
 		-moz-transition: none !important;
 		-o-transition: none !important;
 		transition: none !important;
+	}
+
+	iframe {
+		object-fit: fill;
 	}
 
 	section {
@@ -405,36 +429,57 @@
 		user-select: none;
 	}
 
-	.shadow {
-		--shadow-start: rgba(0, 0, 0, 1);
-		--shadow-curve: 50%;
-		--shadow-end: rgba(0, 0, 0, 0);
+	.button-wrapper {
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		width: 10%;
-		z-index: 1000;
-	}
-	.shadow.left {
 		left: 0;
-		background: linear-gradient(
-			to right,
-			var(--shadow-start),
-			var(--shadow-curve),
-			var(--shadow-end)
-		);
-	}
-	.shadow.right {
 		right: 0;
-		background: linear-gradient(
-			to left,
-			var(--shadow-start),
-			var(--shadow-curve),
-			var(--shadow-end)
-		);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 2rem;
+		z-index: 1000;
+		pointer-events: none;
 	}
-	.shadow:hover {
-		--shadow-curve: 70%;
+	.button {
+		pointer-events: auto;
+		--dim: 3.5rem;
+		width: var(--dim);
+		height: var(--dim);
+		font-size: 2.5rem;
+		padding: 0.75rem;
+		text-align: center;
+		/* margin: 0.75rem 0; */
+		border-radius: 50%;
+		opacity: 0.3;
+		outline: 1px solid #242424;
+		-webkit-text-stroke: 1px #303030;
+		transition: opacity 0.1s ease-in-out, outline 0.05s ease-in-out;
+		position: relative;
+	}
+	.button:hover {
+		opacity: 1;
+		outline: 3px ridge #909090;
+	}
+	.button.left {
+		left: 0;
+		/* background:  */
+	}
+	.button.left::after {
+		content: '<';
+		position: absolute;
+		top: 23%;
+		left: 23%;
+	}
+	.button.right {
+		right: 0;
+	}
+	.button.right::after {
+		content: '>';
+		position: absolute;
+		top: 23%;
+		right: 23%;
 	}
 
 	.carousel-container {
@@ -447,7 +492,7 @@
 
 	.carousel-item {
 		/* width: fit-content; */
-		height: 95%;
+		/* height: 95%; */
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -475,6 +520,8 @@
 		position: relative;
 		transition: height 0.5s linear;
 		overflow: hidden;
+		/* padding: 0.25rem; */
+		padding-bottom: 0;
 		/* max-width: 50%; */
 	}
 	.info-window {
@@ -483,10 +530,12 @@
 		height: 100%;
 		overflow: hidden;
 		/* background-color: blue; */
-		border-radius: 10px;
+		border-radius: 20px;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 		padding: 0;
+		/* margin: 0.5rem; */
+		background: #161616;
 	}
 
 	.info-gutter-outer {
@@ -529,5 +578,6 @@
 		overflow-y: auto;
 		width: 100%;
 		padding: 1rem;
+		/* background: #161616; */
 	}
 </style>

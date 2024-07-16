@@ -140,6 +140,6 @@
 		bottom: 0;
 		z-index: 190;
 		pointer-events: none;
-		padding: 4px 3px
+		/* padding: 4px 3px */
 	}
 </style>
