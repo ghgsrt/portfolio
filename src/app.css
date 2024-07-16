@@ -47,6 +47,7 @@ body {
 	width: 100%;
 	background: var(--color-foreground);
 	overflow: hidden;
+	z-index: 2000;
 }
 
 #app {
