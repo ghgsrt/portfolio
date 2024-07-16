@@ -128,7 +128,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		margin: 2rem 3rem;
+		margin: 3rem 3rem;
 		width: var(--dims);
 		height: var(--dims);
 		cursor: pointer;
