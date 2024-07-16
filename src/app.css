@@ -59,7 +59,7 @@ body {
 	overflow-x: hidden;
 	overflow-y: auto;
 	background-color: var(--color-background);
-	/* overflow: hidden; */
+	overflow: hidden;
 	border: 1px solid black;
 	border-radius: 40px;
 	/* border-right: 1px solid black; */
