@@ -308,18 +308,16 @@
 		<div
 			bind:this={infoWindow}
 			class="info-window"
-			style:margin-top={`${infoTopOffset}px`}
+			style:margin-top={`${infoTopOffset + 1}px`}
 			style:transition={!blockTransitions
 				? `max-height ${transTime * 0.85}ms ease-in-out`
 				: 'none'}
+			style:padding={'0px 0'}
 		>
 			<div
-				style:overflow={'hidden'}
 				style:height={'100%'}
 				style:z-index={2000}
 				style:border-radius={'20px 20px 0 0'}
-				style:margin-top={'1px'}
-				style:margin-right={'3px'}
 			>
 				<Scrollbar parent={info[carouselIdx]} arcTop={20} />
 			</div>
@@ -459,14 +457,17 @@
 	}
 	.info-window {
 		position: relative;
-		width: 100%;
+		width: calc(100% - 6px);
 		height: 100%;
 		overflow: hidden;
 		border-radius: 20px;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 		padding: 0;
+		/* margin: 0 2px; */
+		/* margin-top: 1px; */
 		background: #161616;
+		z-index: 2000;
 	}
 
 	.info {

@@ -5,6 +5,8 @@
 	export let arc = 0;
 	export let arcTop = 0;
 	export let arcBottom = 0;
+	export let top = 0;
+	export let left = 0;
 
 	let viewBox: string;
 	let height: string;
@@ -43,7 +45,7 @@
 
 {#if parent?.scrollHeight > parent?.offsetHeight}
 	<div class="svg-wrapper">
-		<svg {viewBox} {height} {width}>
+		<svg {viewBox} {height} {width} style:top style:left>
 			<path
 				{d}
 				stroke-dasharray={dashArray}
@@ -59,7 +61,6 @@
 <style>
 	svg {
 		position: absolute;
-		top: 0;
 		left: 0;
 		min-height: 100%;
 		width: 100%;
