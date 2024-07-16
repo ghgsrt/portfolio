@@ -14,9 +14,6 @@
 </script>
 
 <script lang="ts">
-	import { colors } from './data/siteInfo';
-	import { shuffleArray } from './utils';
-
 	export let item: InfoItem;
 </script>
 
@@ -37,23 +34,13 @@
 </div>
 <span><strong>> started: </strong>{item?.started}</span>
 <span><strong>> status: </strong>{item?.status}</span>
-<span
-><strong>> stack: </strong>{
-	item?.stack
-	}</span>
-	<!-- // (item?.stack).map((entry) => { -->
-	<!-- // 	if (entry in colors)
-	// 		return `<span style:color={${colors[entry]}}>${entry}</span>`;
-	// 	else entry;
-	// }) -->
+<span><strong>> stack: </strong>{item?.stack}</span>
 <br />
 <span>{item?.short}</span>
 <br />
 <h4>completed</h4>
 <p>
 	{item?.completed}
-	<!-- {shuffleArray(item?.description.split(' ') ?? []).join(' ') +
-		(Math.random() > 0.5 ? item?.description : '')} -->
 </p>
 <br />
 <h4>todo</h4>
@@ -84,23 +71,11 @@
 		height: var(--dims);
 		cursor: pointer;
 		opacity: 0.5;
-		/* border-radius: 50%; */
-		/* background-color: #909090; */
 		background: url('/github.webp') no-repeat center;
 		background-size: contain;
 		border: none;
 	}
 	.github:hover {
 		opacity: 1;
-	}
-
-	button {
-		
-	}
-
-	.github a {
-		pointer-events: all;
-		min-width: var(--dims);
-		min-height: var(--dims);
 	}
 </style>

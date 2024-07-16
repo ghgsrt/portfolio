@@ -34,7 +34,6 @@
 		<button
 			class="indicator"
 			on:click={() => {
-				console.log('scrolling');
 				main.scrollBy({ top: main.offsetHeight, behavior: 'smooth' });
 			}}>V</button
 		>
@@ -45,29 +44,6 @@
 </main>
 
 <style>
-	svg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		min-height: 100%;
-		width: 100%;
-		/* bottom: 0;
-		right: 0; */
-		z-index: 1000;
-		pointer-events: none;
-		/* padding-right: 10px; */
-	}
-
-	.svg-wrapper {
-		position: sticky;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 1000;
-		pointer-events: none;
-	}
-
 	main {
 		position: relative;
 		width: 100%;
@@ -85,13 +61,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		/* padding: 2rem; */
 	}
 
 	.wrapper {
-		/* height: 88%; */
 		flex: 1;
-		/* margin: -3rem; */
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -114,7 +87,6 @@
 		font-size: 2rem;
 		padding: 0.75rem;
 		text-align: center;
-		/* margin: 0.75rem 0; */
 		border-radius: 50%;
 		opacity: 0.3;
 		outline: 1px solid #242424;
@@ -161,8 +133,6 @@
 		height: var(--dims);
 		cursor: pointer;
 		opacity: 0.5;
-		/* border-radius: 50%; */
-		/* background-color: #909090; */
 		background: url('/github.webp') no-repeat center;
 		background-size: contain;
 		border: none;

@@ -28,35 +28,16 @@
 		dashArray = `${scrollLen} ${parent?.scrollHeight - scrollLen + 100}`;
 		dashOffset = -parent?.scrollTop ?? 0;
 		scrollPos = parent?.scrollTop ?? 0;
-		console.log(scrollLen, dashArray, dashOffset, parent?.scrollTop);
 	};
 
 	$: parent && update(),
 		parent?.addEventListener('scroll', () => {
 			dashOffset += scrollPos - parent.scrollTop;
-			console.log(dashOffset, scrollPos, parent.scrollTop);
 			scrollPos = parent.scrollTop;
 		});
-
-	onMount(() => {
-		// allow parent to mount
-		setTimeout(() => {
-			update();
-			window.addEventListener('resize', update);
-			parent?.addEventListener('scroll', () => {
-				dashOffset += scrollPos - parent.scrollTop;
-				console.log(dashOffset, scrollPos, parent.scrollTop);
-				scrollPos = parent.scrollTop;
-			});
-		});
-	});
-
-	onDestroy(() => {
-		window.removeEventListener('resize', update);
-	});
 </script>
 
-<svelte:window on:scroll={() => {}} />
+<svelte:window on:resize={update} />
 
 {#if parent?.scrollHeight > parent?.offsetHeight}
 	<div class="svg-wrapper">
