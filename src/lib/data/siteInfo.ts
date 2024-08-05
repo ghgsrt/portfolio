@@ -25,7 +25,7 @@ export const items: InfoItem[] = [
 		status: 'In Progress',
 		stack: ['HTMX', 'ElysiaJS'],
 		short:
-			"A relatively complex chat application where users can only see messages in languages known by their currently selected 'actor'. Created to facilitate Dungeons and Dragons games, making in-game language matter a bit more.\nFor fun, created using as little client-side JavaScript as possible",
+			"A relatively complex chat application where users can only see messages in languages known by their currently selected 'actor'. Created to facilitate Dungeons and Dragons games, making in-game language matter a bit more. Also, for fun, created using as little client-side JavaScript as possible",
 		completed:
 			'Creating, reserving, and otherwise basic editing of actors and their properties. Actor tooltips. Basic chat functionality, prepared for more complex interactions. Custom multiselect',
 		todo: "Hook up an actual database and file store. Improve UI/UX for sending chats. Handle more complex chat interactions like targeted speaking, replys, actor groups, and unread notifications. Provide *extensive* host controls. Create a 'users' section which will function more like a traditional basic chat app for meta discussion",
@@ -41,8 +41,8 @@ export const items: InfoItem[] = [
 		short:
 			'A combat simulator for MMOs, with a focus on FFXIV.\nThe goal is to enable simulating builds and combat rotations to optimize DPS, and to provide a platform for theorycrafting',
 		completed:
-			'The foundation of the combat system: actions, effects, traits, cooldowns, combos, resources, etc. (as well as ~70% of Endwalker-era Dragoon abilities for demo); keybinding; drag/drop from "spellbook"',
-		todo: 'Add in items and gear (from existing API), player stats and apply them to damage calculations, skill trees, wide range of automation for better testing builds (generally just a crap load of heuristics), complete Dragoon and maybe one other demo class to ensure system can handle everything, and a LOT of UI/UX improvements',
+			'The foundation of the combat system: actions, effects, traits, cooldowns, combos, resources, etc. (as well as ~70% of Endwalker-era Dragoon abilities for demo). Keybinding. Drag/drop from "spellbook"',
+		todo: 'Add in items and gear (from existing API). Player stats and apply them to damage calculations. Skill trees. Wide range of automation for better testing builds (generally just a crap load of heuristics). Complete Dragoon and maybe one other demo class to ensure system can handle everything. A LOT of UI/UX improvements',
 	},
 	{
 		name: 'The Wild Sheep Chase',
@@ -85,9 +85,22 @@ export const items: InfoItem[] = [
 		todo: 'Perhaps a HUD for some user controls 🤷🏻‍♂️',
 	},
 	{
+		name: 'Pokemon Red Clone',
+		url: 'poke.alexbos.co',
+		github: 'poke',
+		color: colors.angular,
+		started: '12-25-2021',
+		status: 'Abandoned',
+		stack: ['Angular'],
+		short: "A web clone of the original Pokemon Red game (please don't sue)",
+		completed:
+			"Rudimentary combat system accounting for types, levels, and stats (right click in a fight to advance text prompts). Rudimentary pokedex (right click when not in a fight to open the menu; all 'monsters' are currently just a copy/paste Bulbasaur)",
+		todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
+	},
+	{
 		name: 'ZIL Web Interpreter (no Z-Machine)',
 		url: 'zil.alexbos.co',
-		github: 'zil-interpreter',
+		github: 'ziljs',
 		color: colors.svelte,
 		started: '09-16-2023',
 		status: 'Not Abandoned; Low Priority',
@@ -99,24 +112,11 @@ export const items: InfoItem[] = [
 		todo: "The rest of the parser (just enough to 'transpile' Zork's text parser, specifically), all of the UI, and a convenient way to drop in multiple game files so a user can play any ZIL game they have the source code for",
 	},
 	{
-		name: 'Pokemon Red Clone',
-		url: 'poke.alexbos.co',
-		github: 'poke',
-		color: colors.angular,
-		started: '12-25-2021',
-		status: 'Abandoned',
-		stack: ['Angular'],
-		short: "A web clone of the original Pokemon Red game (please don't sue)",
-		completed:
-			'Rudimentary combat system accounting for types, levels, and stats; rudimentary pokedex',
-		todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
-	},
-	{
 		name: 'Dueling Network Clone',
 		url: 'duel.alexbos.co',
 		github: 'duel',
 		color: colors.htmx,
-		started: '08-26-2023',
+		started: 'N/A',
 		status: 'In Planning',
 		stack: ['HTMX', 'JetZig'],
 		short:
@@ -133,7 +133,7 @@ export const items: InfoItem[] = [
 		status: 'Queued',
 		stack: ['Zig'],
 		short:
-			"A tower defense derivative made entirely in Zig. Because: \n1. It's an excuse to learn Zig (after getting some exposure with the Dueling Network clone)\n2. I enjoy TD games but am generally unsatisfied with the free options",
+			"A tower defense derivative made entirely in Zig because 1. It's an excuse to learn Zig (after getting some exposure with the Dueling Network clone) and 2. I enjoy TD games but am generally left unsatisfied with the free options",
 		completed: '',
 		todo: '',
 	},
