@@ -1,6 +1,6 @@
 import type { InfoItem } from '../Info.svelte';
 
-export const colors: Record<string, string> = {
+export const colors = {
 	vanilla: '#f7df1e',
 	typescript: '#3178c6',
 	solid: ' #2c4f7c',
@@ -11,10 +11,25 @@ export const colors: Record<string, string> = {
 	htmx: '#5b96d5',
 	alpine: '#75bfd0',
 	astro: '#e63bad',
-};
+	zig: '#f6a416',
+} as const;
 export type Colors = keyof typeof colors;
 
 export const items: InfoItem[] = [
+	{
+		name: 'Language Locked Chat',
+		url: 'lang.alexbos.co',
+		github: 'lang-htmx',
+		color: colors.htmx,
+		started: '07-14-2024',
+		status: 'In Progress',
+		stack: ['HTMX', 'ElysiaJS'],
+		short:
+			"A relatively complex chat application where users can only see messages in languages known by their currently selected 'actor'. Created to facilitate Dungeons and Dragons games, making in-game language matter a bit more.\nFor fun, created using as little client-side JavaScript as possible",
+		completed:
+			'Creating, reserving, and otherwise basic editing of actors and their properties. Actor tooltips. Basic chat functionality, prepared for more complex interactions. Custom multiselect',
+		todo: "Hook up an actual database and file store. Improve UI/UX for sending chats. Handle more complex chat interactions like targeted speaking, replys, actor groups, and unread notifications. Provide *extensive* host controls. Create a 'users' section which will function more like a traditional basic chat app for meta discussion",
+	},
 	{
 		name: 'MMO Combat Simulator',
 		url: 'mmo.alexbos.co',
@@ -57,19 +72,6 @@ export const items: InfoItem[] = [
 		todo: "I was considering adding a multiplayer functionality and expanding the available word size, but I think I'll just leave it as is",
 	},
 	{
-		name: 'Pokemon Red Clone',
-		url: 'poke.alexbos.co',
-		github: 'poke',
-		color: colors.angular,
-		started: '12-25-2021',
-		status: 'Abandoned',
-		stack: ['Angular'],
-		short: "A web clone of the original Pokemon Red game (please don't sue)",
-		completed:
-			'Rudimentary combat system accounting for types, levels, and stats; rudimentary pokedex',
-		todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
-	},
-	{
 		name: "Conway's Game of Life",
 		url: 'conway.alexbos.co',
 		github: 'conway',
@@ -78,36 +80,9 @@ export const items: InfoItem[] = [
 		status: 'Complete',
 		stack: ['JavaScript'],
 		short:
-			"A simple implementation of Conway's Game of Life with visual representation of when a cell is born (green) or dies (red)",
+			"(click to play)\nA simple implementation of Conway's Game of Life with visual representation of when a cell is born (green) or dies (red)",
 		completed: 'The game of life',
-		todo: "Nothing, it's done (click on it)",
-	},
-	{
-		name: 'Language Locked Chat',
-		url: 'lang.alexbos.co',
-		github: 'lang',
-		color: colors.vue,
-		started: '03-01-2022',
-		status: 'Complete',
-		stack: ['Vue'],
-		short:
-			"A chat application where users can only see messages in the language they've selected. Created to facilitate Dungeons and Dragons games, making in-game language matter a bit more",
-		completed:
-			'The basic chat functionality, including sending and receiving messages, and the language selection system. Hosts can set a range of languages to choose from, with master controls over the chatters languages',
-		todo: "Nothing, it's done",
-	},
-	{
-		name: 'Dueling Network Clone',
-		url: 'duel.alexbos.co',
-		github: 'duel',
-		color: colors.htmx,
-		started: '08-26-2023',
-		status: 'In Progress',
-		stack: ['HTMX'],
-		short:
-			"A clone of the now defunct Yu-Gi-Oh! Dueling Network, a browser-based platform for playing the Yu-Gi-Oh! card game (please don't sue)",
-		completed: 'Nothing',
-		todo: 'Lobbies, deck builder utilizing public api, deck database, game room, controls for fundamental game mechanics, multiplayer, chat, etc.',
+		todo: 'Perhaps a HUD for some user controls 🤷🏻‍♂️',
 	},
 	{
 		name: 'ZIL Web Interpreter (no Z-Machine)',
@@ -124,15 +99,42 @@ export const items: InfoItem[] = [
 		todo: "The rest of the parser (just enough to 'transpile' Zork's text parser, specifically), all of the UI, and a convenient way to drop in multiple game files so a user can play any ZIL game they have the source code for",
 	},
 	{
-		name: 'placeholder',
+		name: 'Pokemon Red Clone',
+		url: 'poke.alexbos.co',
+		github: 'poke',
+		color: colors.angular,
+		started: '12-25-2021',
+		status: 'Abandoned',
+		stack: ['Angular'],
+		short: "A web clone of the original Pokemon Red game (please don't sue)",
+		completed:
+			'Rudimentary combat system accounting for types, levels, and stats; rudimentary pokedex',
+		todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
+	},
+	{
+		name: 'Dueling Network Clone',
+		url: 'duel.alexbos.co',
+		github: 'duel',
+		color: colors.htmx,
+		started: '08-26-2023',
+		status: 'In Planning',
+		stack: ['HTMX', 'JetZig'],
+		short:
+			"A clone of the now defunct Yu-Gi-Oh! Dueling Network, a browser-based platform for playing the Yu-Gi-Oh! card game (please don't sue)",
+		completed: 'Nothing',
+		todo: 'Lobbies, deck builder utilizing public api, deck database, game room, controls for fundamental game mechanics, multiplayer, chat, etc.',
+	},
+	{
+		name: 'Tower Defense',
 		url: 'placeholder',
 		github: 'placeholder',
-		color: colors.vanilla,
-		started: '01-01-0001',
-		status: 'placeholder',
-		stack: ['placeholder'],
-		short: 'placeholder',
-		completed: 'placeholder',
-		todo: 'make this not a placeholder',
+		color: colors.zig,
+		started: 'N/A',
+		status: 'Queued',
+		stack: ['Zig'],
+		short:
+			"A tower defense derivative made entirely in Zig. Because: \n1. It's an excuse to learn Zig (after getting some exposure with the Dueling Network clone)\n2. I enjoy TD games but am generally unsatisfied with the free options",
+		completed: '',
+		todo: '',
 	},
 ];

@@ -34,19 +34,23 @@
 </div>
 <span><strong>> started: </strong>{item?.started}</span>
 <span><strong>> status: </strong>{item?.status}</span>
-<span><strong>> stack: </strong>{item?.stack}</span>
+<span><strong>> stack: </strong>{item?.stack.join(', ')}</span>
 <br />
 <span>{item?.short}</span>
-<br />
-<h4>completed</h4>
-<p>
-	{item?.completed}
-</p>
-<br />
-<h4>todo</h4>
-<p>
-	{item?.todo}
-</p>
+{#if item?.completed}
+	<br />
+	<h4>completed</h4>
+	<p>
+		{item?.completed}
+	</p>
+{/if}
+{#if item?.todo}
+	<br />
+	<h4>todo</h4>
+	<p>
+		{item?.todo}
+	</p>
+{/if}
 
 <style>
 	span {
