@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Scrollbar from './lib/Scrollbar.svelte';
-	import Test from './lib/Test.svelte';
+	import Test from './lib/Index.svelte';
 
 	let main: HTMLElement;
 	let innerWidth: number;
@@ -11,12 +11,12 @@
 <Scrollbar parent={main} arcTop={40} arcBottom={innerWidth < 660 ? 0 : 40} />
 <main bind:this={main}>
 	<section>
-		<button
+		<a
 			class="github"
-			on:click={() => {
-				window.open(`https://github.com/ghgsrt/portfolio`, '_blank');
-			}}
-		/>
+			href="https://github.com/ghgsrt/portfolio"
+			target="_blank"
+			rel="noopener noreferrer">{''}</a
+		>
 		<div class="wrapper">
 			<div class="header">
 				<h3>Alex Bosco's</h3>
@@ -108,7 +108,7 @@
 	.indicator:hover {
 		opacity: 1;
 		animation: none;
-		outline: 3px ridge #909090;
+		/* outline: 3px ridge #909090; */
 	}
 
 	@keyframes blink {

@@ -402,7 +402,7 @@
 	}
 	.button:hover {
 		opacity: 1;
-		outline: 3px ridge #909090;
+		/* outline: 3px ridge #909090; */
 	}
 	.button.left {
 		left: 0;
