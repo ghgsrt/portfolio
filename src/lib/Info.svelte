@@ -6,7 +6,7 @@
 		color: string;
 		started: string;
 		status: string;
-		stack: Array<string>;
+		dependencies: Array<string>;
 		short: string;
 		completed: string;
 		todo: string;
@@ -41,7 +41,7 @@
 </div>
 <span><strong>> started: </strong>{item?.started}</span>
 <span><strong>> status: </strong>{item?.status}</span>
-<span><strong>> stack: </strong>{item?.stack.join(', ')}</span>
+<span><strong>> dependencies: </strong>{item?.dependencies.join(', ')}</span>
 <br />
 <span>{item?.short}</span>
 {#if item?.completed}

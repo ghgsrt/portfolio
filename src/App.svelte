@@ -4,6 +4,14 @@
 
 	let main: HTMLElement;
 	let innerWidth: number;
+
+	const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+	if (IS_IOS) {
+		const element = document.querySelector('meta[name=viewport]')!;
+		let content = element.getAttribute('content');
+
+		element.setAttribute('content', content + ', maximum-scale=1.0');
+	}
 </script>
 
 <svelte:window bind:innerWidth />
@@ -19,12 +27,13 @@
 		>
 		<div class="wrapper">
 			<div class="header">
-				<h3>Alex Bosco's</h3>
-				<h1>Project Purgatory</h1>
+				<h2>Alex Bosco's</h2>
+				<h1>Project Portfolio</h1>
 			</div>
 			<p>
-				A brief showcase of the projects that made it past the concept stage,
-				yet were inevitably cast aside for more interesting endeavors
+				A brief showcase of the projects that proved interesting enough to bear <em
+					>some</em
+				> fruit, as well as plans for the future
 			</p>
 		</div>
 		<small style:color="var(--color-accent-sys)"
@@ -74,9 +83,18 @@
 		margin-bottom: 2rem;
 	}
 
+	.header h1 {
+		font-size: 3rem;
+	}
+	.header h3 {
+	}
+
 	p,
 	small {
 		padding: 0 1rem;
+	}
+	p {
+		font-size: 1.2rem;
 	}
 
 	.indicator {
