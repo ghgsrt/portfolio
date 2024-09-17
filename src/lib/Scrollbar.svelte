@@ -28,7 +28,7 @@
 			(parent?.offsetHeight / parent?.scrollHeight) * pathLength
 		);
 		dashArray = `${scrollLen} ${parent?.scrollHeight - scrollLen + 100}`;
-		dashOffset = -parent?.scrollTop ?? 0;
+		dashOffset = -(parent?.scrollTop ?? 0);
 		scrollPos = parent?.scrollTop ?? 0;
 	};
 
@@ -41,7 +41,7 @@
 	onMount(update);
 </script>
 
-<svelte:window on:resize={update} />
+<svelte:window on:resize={() => setTimeout(update, 50)} />
 
 {#if parent?.scrollHeight > parent?.offsetHeight}
 	<div class="svg-wrapper">

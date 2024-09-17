@@ -15,7 +15,7 @@
 	let infoHeights: number[] = []; // "let" to be reactive
 	let infoContainerWidth: number;
 	let infoContainerHeight: number;
-	$: infoTopOffset = infoContainerHeight / 15;
+	$: infoTopOffset = Math.floor(infoContainerHeight / 15);
 
 	const visibleItems = 1.5;
 	const itemSpacing = 30; // px
@@ -208,7 +208,7 @@
 		prevPath[1]?.__clear(true);
 		prevPath = [];
 
-		setTimeout(shiftIdx(0));
+		setTimeout(shiftIdx(0), 50);
 	};
 
 	onMount(() => {
@@ -226,7 +226,7 @@
 			setItemWidth();
 			resetCarousel();
 			setTimeout(() => (blockTransitions = false), 7);
-		}, 7);
+		}, 10);
 	}}
 />
 
@@ -260,14 +260,23 @@
 				}`}
 				style:z-index={items.length - Math.abs(relPosMap[i][carouselIdx])}
 			>
-				<iframe
-					title={items[i]?.short}
-					src="https://{items[i]?.url}"
-					allowfullscreen
-					height="100%"
-					width="100%"
-					loading="lazy"
-				></iframe>
+				{#if items[i]?.url}
+					<iframe
+						title={items[i]?.short}
+						src="https://{items[i]?.url}"
+						allowfullscreen
+						height="100%"
+						width="100%"
+						loading="lazy"
+					></iframe>
+				{:else if items[i]?.github}
+					<a
+						class="github"
+						href={`https://github.com/ghgsrt/${items[i]?.github}`}
+						target="_blank"
+						rel="noopener noreferrer">{''}</a
+					>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -445,6 +454,7 @@
 	.info-container {
 		flex: 1;
 		width: fit-content;
+		max-width: 700px;
 		background-color: transparent;
 		display: flex;
 		flex-direction: column;
@@ -480,5 +490,24 @@
 		overflow-y: auto;
 		width: 100%;
 		padding: 1rem;
+	}
+
+	.github {
+		--dims: 10rem;
+		--pos: calc(50% - var(--dims) / 2);
+		width: var(--dims);
+		height: var(--dims);
+		cursor: pointer;
+		opacity: 0.5;
+		background: url('/github.webp') no-repeat center;
+		background-size: contain;
+		border: none;
+		align-self: start;
+		position: absolute;
+		top: var(--pos);
+		left: var(--pos);
+	}
+	.github:hover {
+		opacity: 1;
 	}
 </style>
