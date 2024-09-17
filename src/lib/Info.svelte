@@ -20,24 +20,28 @@
 <div class="header">
 	<div class="spacer"></div>
 	<h3>
-		<a href={`https://${item?.url}`} target="_blank" rel="noopener noreferrer">
+		{#if item?.url}
+			<a
+				href={`https://${item?.url}`}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				{item?.name}
+			</a>
+		{:else}
 			{item?.name}
-		</a>
-		<!-- {`https://${item?.url}`} -->
+		{/if}
 	</h3>
-	<!-- <h3>{item?.name}</h3>
-	<hr />
-	<small>
-		<a href={`https://${item?.url}`} target="_blank" rel="noopener noreferrer">
-			{`https://${item?.url}`}
-		</a>
-	</small> -->
-	<a
-		class="github"
-		href={`https://github.com/ghgsrt/${item?.github}`}
-		target="_blank"
-		rel="noopener noreferrer">{''}</a
-	>
+	{#if item?.github}
+		<a
+			class="github"
+			href={`https://github.com/ghgsrt/${item?.github}`}
+			target="_blank"
+			rel="noopener noreferrer">{''}</a
+		>
+	{:else}
+		<div class="spacer"></div>
+	{/if}
 </div>
 <span><strong>> started: </strong>{item?.started}</span>
 <span><strong>> status: </strong>{item?.status}</span>
