@@ -87,12 +87,12 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'ZIL Web Interpreter (no Z-Machine)',
-		url: 'zil.alexbos.co',
+		url: '',
 		github: 'ziljs',
-		color: colors.svelte,
+		color: colors.typescript,
 		started: '09-16-2023',
 		status: 'Queued',
-		dependencies: ['Svelte'],
+		dependencies: ['TypeScript'],
 		short:
 			'A web-based interpreter for the Zork Implementation Language (ZIL), providing an Obsidian-like interface for streamlined playthroughs of Zork and other ZIL-based games. No Z-Machine to make it more interesting/almost certainly much more performant than current variations of this idea',
 		completed:
@@ -127,8 +127,8 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'Dueling Network Clone',
-		url: 'duel.alexbos.co',
-		github: 'duel',
+		url: '',
+		github: '',
 		color: colors.htmx,
 		started: 'N/A',
 		status: 'In Planning',
