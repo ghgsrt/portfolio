@@ -22,7 +22,9 @@
 	<h3>
 		{#if item?.url}
 			<a
-				href={`https://${item?.url}`}
+				href={item?.url.slice(5) === 'https'
+					? item.url
+					: `https://${item?.url}`}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -35,7 +37,9 @@
 	{#if item?.github}
 		<a
 			class="github"
-			href={`https://github.com/ghgsrt/${item?.github}`}
+			href={item?.github.slice(0, 5) === 'https'
+				? item.github
+				: `https://github.com/ghgsrt/${item?.github}`}
 			target="_blank"
 			rel="noopener noreferrer">{''}</a
 		>
@@ -51,9 +55,7 @@
 {#if item?.completed}
 	<br />
 	<h4>completed</h4>
-	<p>
-		{item?.completed}
-	</p>
+	<p>{@html item?.completed}</p>
 {/if}
 {#if item?.todo}
 	<br />

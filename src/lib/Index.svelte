@@ -272,7 +272,9 @@
 				{:else if items[i]?.github}
 					<a
 						class="github"
-						href={`https://github.com/ghgsrt/${items[i]?.github}`}
+						href={items[i]?.github.slice(0, 5) === 'https'
+							? items[i].github
+							: `https://github.com/ghgsrt/${items[i]?.github}`}
 						target="_blank"
 						rel="noopener noreferrer">{''}</a
 					>
