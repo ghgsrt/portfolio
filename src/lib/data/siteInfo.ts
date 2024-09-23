@@ -12,6 +12,8 @@ export const colors = {
 	alpine: '#75bfd0',
 	astro: '#e63bad',
 	zig: '#f6a416',
+	csharp: '#823085',
+	godot: '#478cbf',
 } as const;
 export type Colors = keyof typeof colors;
 
@@ -98,6 +100,47 @@ export const items: InfoItem[] = [
 		completed:
 			'Tokenizer and most of the parser for ZIL files, preliminary system for actually playing the games',
 		todo: "The rest of the parser (just enough to 'transpile' Zork's text parser, specifically), all of the UI, and a convenient way to drop in multiple game files so a user can play any ZIL game they have the source code for",
+	},
+	{
+		name: 'Kinovea Companion',
+		url: '',
+		github: 'https://github.com/SundewBry/Kinovea',
+		color: colors.csharp,
+		started: '11-30-2022',
+		status: 'Abandoned',
+		dependencies: ['C#', 'Kinovea'],
+		short:
+			'A fork of the Kinovea motion analysis system for the purposes of conducting research on the risk of ACL injury in female athletes. A senior design project sponsored by Penn State',
+		completed:
+			'A system for synchronizing the output of the motion data with independently collected force pad data which relied on CSV manipulation, programmatically starting/stopping relevant collection softwares, and post-processing the data to account for any delays in the prior step<br /><br />Files I wrote:<br/><ul><li>Analysis-ter/FakeUser.cs</li><li>Analysis-ter/Template.cs</li><li>Analysis-ter/Synchronizer.cs (not the last two methods)</li><li>Analysis-ter/Math.cs</li><li>Most of Analysis-ter/Csv.cs</li><li>Analysis-ter/FileHandler.cs</li><li>AnalysistemUnitTest/UnitTest.cs</li></ul>',
+		todo: 'Ensure accuracy of the post-processing step, feed the data into a series of complex matrix computations that were only partially implemented, and output meaningful heuristics from the data',
+	},
+	{
+		name: 'ACL-injury Educational Game',
+		url: '',
+		github: 'https://github.com/colinabarry/Interaction-System',
+		color: colors.godot,
+		started: '02-28-2023',
+		status: 'Functionally Complete',
+		dependencies: ['GDScript', 'Godot'],
+		short: 'A K-12 educational game relating to the risk of ACL injury',
+		completed:
+			'Basic game loop, a rudimentary open world, a few minigames, an in-depth dialogue system, and a quiz at the end<br /><br />Files I wrote:<br/ ><ul><li>All of src/dialogues</li><li>All of src/scripts/dialog_system</li></ul>',
+		todo: 'Make it actually a good game :)',
+	},
+	{
+		name: 'Shoddy Game Engine',
+		url: '',
+		github: 'data-dungeon',
+		color: colors.solid,
+		started: '02-01-2023',
+		status: 'Thoroughly Abandoned',
+		dependencies: ['SolidJS', 'Three.js', 'Docker', 'Tauri'],
+		short:
+			"The beginnings of a shoddy Three.js-based game engine I hacked together in a week as the (actual) game developers in my senior design group, for whatever reason, didn't want to default to a real game engine for the ACL-injury educational game",
+		completed:
+			'In-depth input/keybinding system, rudimentary animation mixer, and a basic system for loading models. An attempt at a QWOP-derivative for a minigame/demoing the "engine"<br /><br />Relevant directories:<br /><ul><li>src/hooks</li><li>src/components/QWOP</li></ul>',
+		todo: 'Thankfully nothing as my group came to their senses and opted to switch to Godot',
 	},
 	{
 		name: "Conway's Game of Life",
