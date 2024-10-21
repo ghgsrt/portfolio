@@ -1,8 +1,11 @@
 <script context="module" lang="ts">
+	import type { SvelteComponent } from 'svelte';
+
 	export type InfoItem = {
 		name: string;
-		url: string;
-		github: string;
+		url?: string[];
+		svgFallback?: any;
+		github?: string;
 		color: string;
 		started: string;
 		status: string;
@@ -22,9 +25,9 @@
 	<h3>
 		{#if item?.url}
 			<a
-				href={item?.url.slice(5) === 'https'
-					? item.url
-					: `https://${item?.url}`}
+				href={item?.url[0].slice(5) === 'https'
+					? item.url[0]
+					: `https://${item?.url[0]}`}
 				target="_blank"
 				rel="noopener noreferrer"
 			>

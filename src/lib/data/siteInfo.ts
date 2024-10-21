@@ -1,3 +1,4 @@
+import Zoo from '../../assets/Zoo.svelte';
 import type { InfoItem } from '../Info.svelte';
 
 export const colors = {
@@ -14,13 +15,14 @@ export const colors = {
 	zig: '#f6a416',
 	csharp: '#823085',
 	godot: '#478cbf',
+	golang: '#00ADD8',
 } as const;
 export type Colors = keyof typeof colors;
 
 export const items: InfoItem[] = [
 	{
 		name: 'Language Locked Chat',
-		url: 'lang.alexbos.co',
+		url: ['lang.alexbos.co'],
 		github: 'lang-htmx',
 		color: colors.htmx,
 		started: '07-14-2024',
@@ -33,8 +35,21 @@ export const items: InfoItem[] = [
 		todo: "Hook up an actual database and file store. Add unread notifications, have the message box more closely mimic the end result of what a message will look like in chat (custom textarea), and maybe allow users to specifically link certain actors in their message using Obsidian's link syntax, as well as some other markdown features. Refactor the controller to be less memory hungry (i.e., less interesting)",
 	},
 	{
+		name: 'Zoo Specifics (WIP)',
+		svgFallback: Zoo,
+		color: colors.golang,
+		started: '10-04-2024',
+		status: 'In Progress',
+		dependencies: ['Go', 'SolidJS'],
+		short:
+			'A database/management system purpose-built for zoos and similar businesses. Inspired by the need for small, low-budget zoos to move away from "white-board" tracking of their animals. Designed to operate offline/in spotty connection, with automatic syncing with a remote database',
+		completed:
+			'The basic framework for the remote server (database(s), auth, logging), and the underlying framework of frontend functionality (indexeddb syncing with remote server, event-based system for syncing the indexeddb with any frontend, preliminary UI)',
+		todo: 'Flesh out initial UI design, implement schema system to allow test clients to experiment with what animal profile shapes would be most optimal in the field, some form of offline auth (or at least identification), and make it installable (PWA) and set up a service worker. Conflict resolution for database writes. Redis caching(?). Create a readonly wrapper around the indexeddb to allow for digital displays for guests to learn about an animal. Create a dedicated, online-only management portal. Collect additional user requirements to expand the functionality of the product beyond a glorified user-friendly database',
+	},
+	{
 		name: 'Dotwork Pete',
-		url: 'dotwork.netlify.app',
+		url: ['dotwork.netlify.app'],
 		github: 'dotwork',
 		color: colors.astro,
 		started: '09-09-2024',
@@ -47,8 +62,22 @@ export const items: InfoItem[] = [
 		todo: 'Collect design requirements from Pete to improve the overall look of the site, improve image optimization/delivery (and sizing in production), conform to A11y standards, and improve no-script compatibility',
 	},
 	{
+		name: 'Registration System',
+		url: ['friars.alexbos.co', 'friars.alexbos.co/admin'],
+		github: 'friars',
+		color: colors.htmx,
+		started: '10-14-2024',
+		status: 'In Progress',
+		dependencies: ['HTMX', 'ElysiaJS', 'Stripe', 'Amazon SES', 'NeonDB'],
+		short:
+			'A relatively simplistic event registration system to save the Michigan Friars a bit of money',
+		completed:
+			"NOTE: Admin portal login page currently not loading within iframes for some reason 🤷🏻‍♂️, you'll have to navigate to the actual website to view the demo<br/><br/>A very simple (awaiting design requirements) registration form with paid options that will send a confirmation email on submit. The core of that management system, including queueing emails to specific recipients, very basic email templating, and defining specific emails to be sent on particular actions (e.g., registration). Database, SES, and basic stripe integration<br /><br />To view a demo of the admin portal: go to /admin and input 'test' for username and password<br />In test mode Amazon will only allow emails to be sent to my personal email, so do not expect to be able to register then send yourself an email through the demo",
+		todo: 'Improve the look of the registration form, perhaps integrate an external email templater, add in SMS, and integrate with the existing Friars database for outreach',
+	},
+	{
 		name: 'The Wild Sheep Chase',
-		url: 'sheep.alexbos.co',
+		url: ['sheep.alexbos.co'],
 		github: 'sheep',
 		color: colors.solid,
 		started: '12-09-2023',
@@ -62,7 +91,7 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'MMO Combat Simulator',
-		url: 'mmo.alexbos.co',
+		url: ['mmo.alexbos.co'],
 		github: 'ffxiv',
 		color: colors.solid,
 		started: '11-03-2021',
@@ -76,7 +105,7 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'Wordle Clone',
-		url: 'wordle.alexbos.co',
+		url: ['wordle.alexbos.co'],
 		github: 'wordle',
 		color: colors.alpine,
 		short: "A clone of the popular word game Wordle (please don't sue)",
@@ -89,7 +118,6 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'ZIL Web Interpreter (no Z-Machine)',
-		url: '',
 		github: 'ziljs',
 		color: colors.typescript,
 		started: '09-16-2023',
@@ -103,7 +131,6 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'Kinovea Companion',
-		url: '',
 		github: 'https://github.com/SundewBry/Kinovea',
 		color: colors.csharp,
 		started: '11-30-2022',
@@ -117,7 +144,6 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'ACL-injury Educational Game',
-		url: '',
 		github: 'https://github.com/colinabarry/Interaction-System',
 		color: colors.godot,
 		started: '02-28-2023',
@@ -130,7 +156,6 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: 'Shoddy Game Engine',
-		url: '',
 		github: 'data-dungeon',
 		color: colors.solid,
 		started: '02-01-2023',
@@ -144,7 +169,7 @@ export const items: InfoItem[] = [
 	},
 	{
 		name: "Conway's Game of Life",
-		url: 'conway.alexbos.co',
+		url: ['conway.alexbos.co'],
 		github: 'conway',
 		color: colors.vanilla,
 		started: '08-09-2023',
@@ -155,22 +180,21 @@ export const items: InfoItem[] = [
 		completed: 'The game of life',
 		todo: 'Perhaps a HUD for some user controls 🤷🏻‍♂️',
 	},
-	{
-		name: 'Pokemon Red Clone',
-		url: 'poke.alexbos.co',
-		github: 'poke',
-		color: colors.angular,
-		started: '12-25-2021',
-		status: 'Abandoned',
-		dependencies: ['Angular'],
-		short: "A web clone of the original Pokemon Red game (please don't sue)",
-		completed:
-			"Rudimentary combat system accounting for types, levels, and stats (right click in a fight to advance text prompts). Rudimentary pokedex (right click when not in a fight to open the menu; all 'monsters' are currently just a copy/paste Bulbasaur)",
-		todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
-	},
+	// {
+	// 	name: 'Pokemon Red Clone',
+	// 	url: ['poke.alexbos.co'],
+	// 	github: 'poke',
+	// 	color: colors.angular,
+	// 	started: '12-25-2021',
+	// 	status: 'Abandoned',
+	// 	dependencies: ['Angular'],
+	// 	short: "A web clone of the original Pokemon Red game (please don't sue)",
+	// 	completed:
+	// 		"Rudimentary combat system accounting for types, levels, and stats (right click in a fight to advance text prompts). Rudimentary pokedex (right click when not in a fight to open the menu; all 'monsters' are currently just a copy/paste Bulbasaur)",
+	// 	todo: "The entire rest of the game. Originally got sidetracked creating a mapmaker tool for the next steps, but then got sidetracked from that too, then realized I'd rather not use Angular for fun projects anyways",
+	// },
 	{
 		name: 'Dueling Network Clone',
-		url: '',
 		github: '',
 		color: colors.htmx,
 		started: 'N/A',

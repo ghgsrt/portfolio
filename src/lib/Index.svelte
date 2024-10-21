@@ -261,14 +261,18 @@
 				style:z-index={items.length - Math.abs(relPosMap[i][carouselIdx])}
 			>
 				{#if items[i]?.url}
-					<iframe
-						title={items[i]?.short}
-						src="https://{items[i]?.url}"
-						allowfullscreen
-						height="100%"
-						width="100%"
-						loading="lazy"
-					></iframe>
+					{#each items[i].url as url}
+						<iframe
+							title={items[i]?.short}
+							src="https://{url}"
+							allowfullscreen
+							height="100%"
+							width="{100 / items[i].url.length}%"
+							loading="lazy"
+						></iframe>
+					{/each}
+				{:else if items[i]?.svgFallback}
+					<svelte:component this={items[i]?.svgFallback} class="svg-fallback" />
 				{:else if items[i]?.github}
 					<a
 						class="github"
@@ -511,5 +515,9 @@
 	}
 	.github:hover {
 		opacity: 1;
+	}
+
+	.svg-fallback {
+		height: 100%;
 	}
 </style>
