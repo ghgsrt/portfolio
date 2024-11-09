@@ -20,6 +20,15 @@
 <main bind:this={main}>
 	<section>
 		<a
+			class="resume"
+			href="/Resume 2024.pdf"
+			target="_blank"
+			rel="noopener noreferrer"
+			><span>
+				{'resume'}
+			</span>
+		</a>
+		<a
 			class="github"
 			href="https://github.com/ghgsrt/portfolio"
 			target="_blank"
@@ -141,7 +150,8 @@
 		}
 	}
 
-	.github {
+	.github,
+	.resume {
 		--dims: 2rem;
 		position: absolute;
 		right: 0;
@@ -155,7 +165,22 @@
 		background-size: contain;
 		border: none;
 	}
-	.github:hover {
+	:is(.github, .resume):hover {
 		opacity: 1;
+	}
+	.resume {
+		right: unset;
+		margin-top: 2.5rem;
+		--dims: 3rem;
+		left: 0;
+		background: url('/icons8-resume-50.png') no-repeat center;
+		filter: invert(100%);
+		/* outline: 2px solid black; */
+	}
+	.resume span {
+		position: absolute;
+		left: 3.5rem;
+		top: 0.6rem;
+		color: black;
 	}
 </style>
