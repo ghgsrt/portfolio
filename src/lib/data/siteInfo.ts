@@ -68,11 +68,11 @@ export const items: InfoItem[] = [
 		color: colors.htmx,
 		started: '10-14-2024',
 		status: 'In Progress',
-		dependencies: ['HTMX', 'ElysiaJS', 'Stripe', 'Amazon SES', 'NeonDB'],
+		dependencies: ['HTMX', 'ElysiaJS', 'Stripe', 'Amazon SES'],
 		short:
 			'A relatively simplistic event registration system to save the Michigan Friars a bit of money',
 		completed:
-			"NOTE: Admin portal login page currently not loading within iframes for some reason 🤷🏻‍♂️, you'll have to navigate to the actual website to view the demo<br/><br/>A very simple (awaiting design requirements) registration form with paid options that will send a confirmation email on submit. The core of that management system, including queueing emails to specific recipients, very basic email templating, and defining specific emails to be sent on particular actions (e.g., registration). Database, SES, and basic stripe integration<br /><br />To view a demo of the admin portal: go to /admin and input 'test' for username and password<br />In test mode Amazon will only allow emails to be sent to my personal email, so do not expect to be able to register then send yourself an email through the demo",
+			"A very simple (awaiting design requirements) registration form with paid options that will send a confirmation email on submit. The core of that management system, including queueing emails to specific recipients, very basic email templating, and defining specific emails to be sent on particular actions (e.g., registration). Database, SES, and basic stripe integration<br /><br />To view a demo of the admin portal: go to /admin (or use the right iframe) and input 'test' for username and password<br />In test mode Amazon will only allow emails to be sent to my personal email, so do not expect to be able to register then send yourself an email through the demo",
 		todo: 'Improve the look of the registration form, perhaps integrate an external email templater, add in SMS, and integrate with the existing Friars database for outreach',
 	},
 	{
