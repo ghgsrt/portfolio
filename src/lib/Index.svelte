@@ -276,7 +276,6 @@
 							height="100%"
 							width="{100 / items[i].url.length}%"
 							loading="lazy"
-							sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
 							></iframe>
 					{/each}
 				{:else if items[i]?.svgFallback}
