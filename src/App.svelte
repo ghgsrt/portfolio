@@ -5,7 +5,9 @@
 	let main: HTMLElement;
 	let innerWidth: number;
 
-	const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+	const IS_IOS =
+		/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+		(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 	if (IS_IOS) {
 		const element = document.querySelector('meta[name=viewport]')!;
 		let content = element.getAttribute('content');
@@ -80,7 +82,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		max-width: 100%;
+		max-width: 100vw;
 		overflow-x: hidden;
 	}
 

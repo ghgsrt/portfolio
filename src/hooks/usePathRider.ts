@@ -65,6 +65,7 @@ const usePathRider = ({
 			const lengthAtPoint = getLengthAtPoint(point);
 			const scrollPos = getScrollPosFromLength(lengthAtPoint);
 
+			console.log('SCROLLING: scrollPos');
 			window.scrollTo({
 				top: scrollPos,
 				behavior: 'smooth',
