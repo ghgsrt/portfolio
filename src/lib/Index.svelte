@@ -277,7 +277,8 @@
 							width="{100 / items[i].url.length}%"
 							loading="lazy"
 							sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
-						></iframe>
+							scrolling="no"
+							></iframe>
 					{/each}
 				{:else if items[i]?.svgFallback}
 					<svelte:component this={items[i]?.svgFallback} class="svg-fallback" />
