@@ -95,8 +95,6 @@
 	.header h1 {
 		font-size: 3rem;
 	}
-	.header h3 {
-	}
 
 	p,
 	small {

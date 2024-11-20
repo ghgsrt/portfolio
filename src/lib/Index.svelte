@@ -25,45 +25,51 @@
 	let carouselHeight: number;
 	let carouselWidth: number;
 	let itemWidth: number;
-	$: itemHeight = carouselHeight * 0.95;
+	let itemHeight: number;
 
-	const setItemWidth = () => {
+	const initialMap = Array(items.length).fill([]);
+	let relPosMap: number[][] = initialMap;
+	let leftMap: number[][] = initialMap;
+	let topMap: number[][] = initialMap;
+
+	const computeMapsAndSizing = () => {
+		itemHeight = carouselHeight * 0.95;
 		let _itemWidth = (itemHeight * 16) / 9;
 		itemWidth =
 			window.innerWidth < _itemWidth ? window.innerWidth * 0.95 : _itemWidth;
+
+		relPosMap = Array.from({ length: items.length }, (_, i) =>
+			Array.from({ length: items.length }, (_, j) => {
+				const relPos = mod(i - j, items.length);
+				return relPos <= items.length / 2 ? relPos : relPos - items.length;
+			})
+		);
+		leftMap = Array.from({ length: items.length }, (_, i) =>
+			Array.from({ length: items.length }, (_, j) => {
+				const relPos = relPosMap[i][j];
+				return (
+					(carouselWidth - itemWidth) / 2 +
+					relPos * itemWidth +
+					Math.sign(relPos) * itemSpacing
+				);
+			})
+		);
+		topMap = Array.from({ length: items.length }, (_, i) =>
+			Array.from({ length: items.length }, (_, j) => {
+				const relPos = relPosMap[i][j];
+				if (relPos === 0) return 0;
+
+				const sign = Math.sign(relPos);
+				const start = (sign === 1 ? i - relPos : i) + 1;
+				const end = (sign === 1 ? i : i - relPos) + 1;
+
+				let height = 0;
+				for (let j = start; j < end; j++) height += infoContainerHeight;
+
+				return -sign * height;
+			})
+		);
 	};
-
-	$: relPosMap = Array.from({ length: items.length }, (_, i) =>
-		Array.from({ length: items.length }, (_, j) => {
-			const relPos = mod(i - j, items.length);
-			return relPos <= items.length / 2 ? relPos : relPos - items.length;
-		})
-	);
-	$: leftMap = Array.from({ length: items.length }, (_, i) =>
-		Array.from({ length: items.length }, (_, j) => {
-			const relPos = relPosMap[i][j];
-			return (
-				(carouselWidth - itemWidth) / 2 +
-				relPos * itemWidth +
-				Math.sign(relPos) * itemSpacing
-			);
-		})
-	);
-	$: topMap = Array.from({ length: items.length }, (_, i) =>
-		Array.from({ length: items.length }, (_, j) => {
-			const relPos = relPosMap[i][j];
-			if (relPos === 0) return 0;
-
-			const sign = Math.sign(relPos);
-			const start = (sign === 1 ? i - relPos : i) + 1;
-			const end = (sign === 1 ? i : i - relPos) + 1;
-
-			let height = 0;
-			for (let j = start; j < end; j++) height += infoContainerHeight;
-
-			return -sign * height;
-		})
-	);
 
 	const pathLength = 1000;
 	const pathInc = -8;
@@ -75,6 +81,13 @@
 	let pathChanged = false;
 
 	const Mify = (d: string) => d.replace('L', 'M');
+	const toggleL = (s: string) =>
+		s
+			.split(' ')
+			.reverse()
+			.map((_s) => (_s[0] === 'L' ? _s.slice(1) : `L${_s}`))
+			.join(' ');
+
 	const getDs = (width: number, height: number, strokeWidth: number) => {
 		const startHeight = infoTopOffset;
 
@@ -86,7 +99,6 @@
 		const arc = 20;
 
 		const _arc = `A${arc},${arc} 0 0 1`;
-		// const _start = ``;
 		const _start = `L${midWidth},0`;
 		const _endpoint = `L${midWidth},${startHeight}`;
 
@@ -100,35 +112,22 @@
 
 		let _dRightClear = _dRight
 			.split(` ${_arc} `)
-			.map((s) =>
-				s
-					.split(' ')
-					.reverse()
-					.map((_s) => (_s[0] === 'L' ? _s.slice(1) : `L${_s}`))
-					.join(' ')
-			)
+			.map(toggleL)
 			.reverse()
 			.join(` ${_arc} `.replace('1', '0'));
 		let _dLeftClear = _dLeft
 			.split(` A${arc},${arc} 0 0 0 `)
-			.map((s) =>
-				s
-					.split(' ')
-					.reverse()
-					.map((_s) => (_s[0] === 'L' ? _s.slice(1) : `L${_s}`))
-					.join(' ')
-			)
+			.map(toggleL)
 			.reverse()
 			.join(` ${_arc} `);
+
 		_dRight = `${_endpoint} ${_dRight}`;
 		_dLeft = `${_endpoint} ${_dLeft}`;
 		return {
 			dRight: `${Mify(_start)} ${_dRight}`,
 			dLeft: `${Mify(_start)} ${_dLeft}`,
-			// dRight: `${Mify(_dRight)}`,
-			// dLeft: `${Mify(_dLeft)}`,
-			dRightClear: `M${_dRightClear} ${_endpoint} ${_start}`, //`${Mify(_dRight)} ${_start}`,
-			dLeftClear: `M${_dLeftClear} ${_endpoint} ${_start}`, //`${Mify(_dLeft)} ${_start}`,
+			dRightClear: `M${_dRightClear} ${_endpoint} ${_start}`,
+			dLeftClear: `M${_dLeftClear} ${_endpoint} ${_start}`,
 		};
 	};
 
@@ -213,7 +212,7 @@
 
 	onMount(() => {
 		resetCarousel();
-		setItemWidth();
+		computeMapsAndSizing();
 	});
 
 	let blockTransitions = false;
@@ -223,8 +222,9 @@
 	on:resize={() => {
 		blockTransitions = true;
 		setTimeout(() => {
-			setItemWidth();
 			resetCarousel();
+			computeMapsAndSizing();
+
 			setTimeout(() => (blockTransitions = false), 7);
 		}, 10);
 	}}
@@ -515,9 +515,5 @@
 	}
 	.github:hover {
 		opacity: 1;
-	}
-
-	.svg-fallback {
-		height: 100%;
 	}
 </style>
