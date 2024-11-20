@@ -80,6 +80,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		max-width: 100%;
+		overflow-x: hidden;
 	}
 
 	.wrapper {
