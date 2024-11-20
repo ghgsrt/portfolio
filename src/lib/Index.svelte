@@ -38,6 +38,7 @@
 		itemWidth =
 			window.innerWidth < _itemWidth ? window.innerWidth * 0.95 : _itemWidth;
 
+		console.log('HUH', carouselWidth, carouselHeight, itemWidth, itemHeight);
 		relPosMap = Array.from({ length: items.length }, (_, i) =>
 			Array.from({ length: items.length }, (_, j) => {
 				const relPos = mod(i - j, items.length);
@@ -69,6 +70,8 @@
 				return -sign * height;
 			})
 		);
+
+		console.log('Bro?', relPosMap, leftMap, topMap);
 	};
 
 	const pathLength = 1000;
@@ -212,7 +215,9 @@
 
 	onMount(() => {
 		resetCarousel();
+		console.log('onmount', 0);
 		computeMapsAndSizing();
+		console.log('onmount', 1);
 	});
 
 	let blockTransitions = false;
@@ -223,7 +228,9 @@
 		blockTransitions = true;
 		setTimeout(() => {
 			resetCarousel();
+			console.log('onresize', 0);
 			computeMapsAndSizing();
+			console.log('onresize', 1);
 
 			setTimeout(() => (blockTransitions = false), 7);
 		}, 10);
